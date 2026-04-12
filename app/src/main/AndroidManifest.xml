@@ -1,54 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.canteen">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- ✅ REQUIRED -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!-- 🔥 REQUIRED FOR ANDROID 13+ NOTIFICATIONS -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
     <application
-        android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@drawable/burger"
-        android:label="@string/app_name"
+        android:icon="@drawable/water_icon"
+        android:label="HydroIQ"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Canteen">
+        android:theme="@style/Theme.HydroIQ"
+        android:enableOnBackInvokedCallback="true">
 
-        <!-- Cart Activity -->
+        <!-- MAIN -->
         <activity
-            android:name=".CartActivity"
-            android:exported="false" />
-
-        <!-- Customer Details Activity -->
-        <activity
-            android:name=".CustomerDetailsActivity"
-            android:exported="false" />
-
-        <!-- Order Summary Activity -->
-        <activity
-            android:name=".OrderSummaryActivity"
-            android:exported="false" />
-
-        <!-- Menu Activity -->
-        <activity
-            android:name=".ui.theme.MenuActivity"
-            android:exported="false"
-            android:label="@string/app_name" />
-
-        <!-- Register Activity -->
-        <activity
-            android:name=".RegisterActivity"
-            android:exported="false"
-            android:label="Register" />
-
-        <!-- Login Activity (Launcher) -->
-        <activity
-            android:name=".LoginActivity"
+            android:name=".ui.theme.activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name">
+            android:label="HydroIQ">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
+        <!-- ALL OTHER ACTIVITIES -->
+        <activity android:name=".ui.theme.activities.HomeActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.ActivityPage" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.DashboardActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.MessagesActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.SettingsActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.ThemesActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.TutorialsActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.IntegrationsActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.GraphActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.AlertActivity" android:exported="false"/>
+        <activity android:name=".ui.theme.activities.HistoryActivity" android:exported="false"/>
 
     </application>
 
