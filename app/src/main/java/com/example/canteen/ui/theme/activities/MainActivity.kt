@@ -43,8 +43,8 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_home -> loadHomeScreen()
 
-                R.id.nav_activity ->
-                    startActivity(Intent(this, ActivityPage::class.java))
+                R.id.nav_history ->
+                    startActivity(Intent(this, HistoryActivity::class.java))
 
                 R.id.nav_dashboard ->
                     startActivity(Intent(this, DashboardActivity::class.java))
@@ -64,7 +64,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_integrations ->
                     startActivity(Intent(this, IntegrationsActivity::class.java))
 
-                // 🔥 ADD THIS
                 R.id.nav_graph ->
                     startActivity(Intent(this, GraphActivity::class.java))
             }

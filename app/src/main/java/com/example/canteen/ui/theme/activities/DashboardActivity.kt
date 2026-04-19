@@ -1,188 +1,117 @@
 package com.example.canteen.ui.theme.activities
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.os.Build
-import android.os.Bundle
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import com.example.canteen.R
-import org.eclipse.paho.client.mqttv3.*
-import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.data.*
-import android.graphics.Color
-import android.Manifest
 import android.content.Intent
-import android.widget.Button
-import com.example.canteen.ui.theme.activities.GraphActivity
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.canteen.databinding.ActivityDashboardBinding
+import com.example.canteen.ui.theme.api.RetrofitClient
+import com.example.canteen.ui.theme.model.Feed
+import kotlinx.coroutines.launch
 
 class DashboardActivity : AppCompatActivity() {
 
-    private lateinit var client: MqttClient
-    private val serverURI = "tcp://broker.hivemq.com:1883"
-    private var isConnected = false
-
-    // 🔥 GRAPH
-    private lateinit var chart: LineChart
-    private val entries = ArrayList<Entry>()
-    private var index = 0f
+    private lateinit var binding: ActivityDashboardBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_dashboard)
 
-        val tvPH = findViewById<TextView>(R.id.tvPH)
-        val tvTDS = findViewById<TextView>(R.id.tvTDS)
-        val tvTemp = findViewById<TextView>(R.id.tvTemp)
-        val tvTurbidity = findViewById<TextView>(R.id.tvTurbidity)
-        val tvAlert = findViewById<TextView>(R.id.tvAlert)
+        binding = ActivityDashboardBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // 🔥 Graph Button
-        val btnGraph = findViewById<Button>(R.id.btnGraph)
-
-        btnGraph.setOnClickListener {
-            val intent = Intent(this, GraphActivity::class.java)
-            startActivity(intent)
+        // ✅ FIX 1: Graph button navigation
+        binding.btnGraph.setOnClickListener {
+            startActivity(Intent(this, GraphActivity::class.java))
         }
 
-        // (Optional) If you're using chart in dashboard
-        chart = findViewById(R.id.lineChart)
-
-        // 🔥 Notification permission (Android 13+)
-        if (Build.VERSION.SDK_INT >= 33) {
-            requestPermissions(arrayOf(Manifest.permission.POST_NOTIFICATIONS), 1)
-        }
-
-        connectMQTT(tvPH, tvTDS, tvTemp, tvTurbidity, tvAlert)
+        fetchLiveData()
+        startAutoRefresh()
     }
 
-    // 🔥 MQTT
-    private fun connectMQTT(
-        tvPH: TextView,
-        tvTDS: TextView,
-        tvTemp: TextView,
-        tvTurbidity: TextView,
-        tvAlert: TextView
-    ) {
-        Thread {
-            while (!isConnected) {
-                try {
-                    client = MqttClient(serverURI, MqttClient.generateClientId(), null)
+    private fun fetchLiveData() {
+        lifecycleScope.launch {
+            try {
+                val response = RetrofitClient.thingSpeakApi.getFeeds(
+                    channelId = "3342088",
+                    apiKey = "A7M99B6I0LUM4T6M",
+                    results = 10
+                )
 
-                    val options = MqttConnectOptions()
-                    options.isCleanSession = true
-                    options.isAutomaticReconnect = true
+                val feeds = response.feeds
 
-                    client.connect(options)
-                    isConnected = true
+                if (feeds.isNotEmpty()) {
+                    val latest = feeds.last()
 
-                    client.subscribe("water/quality") { _, message ->
-                        val data = message.toString()
+                    // ✅ Sensor values
+                    val ph = latest.field1 ?: "--"
+                    val tds = latest.field2 ?: "--"
+                    val temp = latest.field3 ?: "--"
+                    val turbidity = latest.field4 ?: "--"
 
-                        runOnUiThread {
-                            handleData(data, tvPH, tvTDS, tvTemp, tvTurbidity, tvAlert)
-                        }
+                    binding.tvPH.text = "pH: $ph"
+                    binding.tvTDS.text = "TDS: $tds"
+                    binding.tvTemp.text = "Temp: $temp"
+                    binding.tvTurbidity.text = "Turbidity: $turbidity"
+
+                    // ✅ FIX 2: Timestamp (formatted)
+                    val rawTime = latest.created_at
+                    val formattedTime = if (rawTime != null) {
+                        rawTime.replace("T", " ").replace("Z", "")
+                    } else {
+                        "--"
                     }
+                    binding.tvTime.text = "Time: $formattedTime"
 
-                } catch (e: Exception) {
-                    runOnUiThread {
-                        tvAlert.text = "Reconnecting..."
+                    // ✅ Water Quality Check
+                    val message = checkWaterQuality(latest)
+                    binding.tvAlert.text = message
+
+                    if (!message.contains("Safe")) {
+                        Toast.makeText(this@DashboardActivity, message, Toast.LENGTH_LONG).show()
                     }
-                    Thread.sleep(3000)
                 }
-            }
-        }.start()
-    }
 
-    // 🔥 HANDLE DATA
-    private fun handleData(
-        data: String,
-        tvPH: TextView,
-        tvTDS: TextView,
-        tvTemp: TextView,
-        tvTurbidity: TextView,
-        tvAlert: TextView
-    ) {
-        val parts = data.split(",")
-
-        if (parts.size == 4) {
-            val ph = parts[0]
-            val tds = parts[1]
-            val temp = parts[2]
-            val turbidity = parts[3]
-
-            tvPH.text = "pH: $ph"
-            tvTDS.text = "TDS: $tds ppm"
-            tvTemp.text = "Temperature: $temp °C"
-            tvTurbidity.text = "Turbidity: $turbidity NTU"
-
-            // 📊 GRAPH
-            val tdsFloat = tds.toFloatOrNull() ?: 0f
-            updateGraph(tdsFloat)
-
-            val isSafe = tds.toIntOrNull()?.let { it < 500 } ?: true
-
-            if (isSafe) {
-                tvAlert.text = "Status: SAFE"
-                tvAlert.setTextColor(getColor(android.R.color.holo_green_light))
-            } else {
-                tvAlert.text = "Status: UNSAFE"
-                tvAlert.setTextColor(getColor(android.R.color.holo_red_light))
-
-                // 🚨 NOTIFICATION
-                showNotification()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@DashboardActivity, "Error fetching data", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    // 📊 GRAPH FUNCTION (OPTIMIZED)
-    private fun updateGraph(value: Float) {
-        if (entries.size > 50) entries.removeAt(0) // limit points
+    private fun checkWaterQuality(feed: Feed): String {
 
-        entries.add(Entry(index++, value))
+        val ph = feed.field1?.toFloatOrNull() ?: 0f
+        val tds = feed.field2?.toFloatOrNull() ?: 0f
+        val temp = feed.field3?.toFloatOrNull() ?: 0f
+        val turbidity = feed.field4?.toFloatOrNull() ?: 0f
 
-        val dataSet = LineDataSet(entries, "TDS")
-        dataSet.color = Color.CYAN
-        dataSet.valueTextColor = Color.WHITE
-        dataSet.setDrawCircles(false)
+        return when {
+            ph < 6 -> "⚠️ Low pH! Water is acidic"
+            ph > 8.5 -> "⚠️ High pH! Water is alkaline"
 
-        val data = LineData(dataSet)
-        chart.data = data
-        chart.invalidate()
-    }
+            tds > 500 -> "⚠️ High TDS! Not safe"
 
-    // 🚨 NOTIFICATION
-    private fun showNotification() {
-        val manager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
-        val channelId = "water_alert"
+            turbidity > 5 -> "⚠️ High Turbidity!"
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                "Water Alerts",
-                NotificationManager.IMPORTANCE_HIGH
-            )
-            manager.createNotificationChannel(channel)
+            temp > 35 -> "⚠️ Temperature too high!"
+
+            else -> "✅ Water is Safe"
         }
-
-        val notification = NotificationCompat.Builder(this, channelId)
-            .setContentTitle("⚠ Water Unsafe!")
-            .setContentText("TDS level is too high")
-            .setSmallIcon(android.R.drawable.ic_dialog_alert)
-            .build()
-
-        manager.notify(1, notification)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        try {
-            if (::client.isInitialized && client.isConnected) {
-                client.disconnect()
+    private fun startAutoRefresh() {
+        val handler = Handler(Looper.getMainLooper())
+
+        val runnable = object : Runnable {
+            override fun run() {
+                fetchLiveData()
+                handler.postDelayed(this, 15000)
             }
-        } catch (e: Exception) {
-            e.printStackTrace()
         }
+
+        handler.post(runnable)
     }
 }
