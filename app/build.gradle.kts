@@ -63,13 +63,18 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("com.google.android.material:material:1.11.0")
-
     //Mqtt
     implementation("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
 
 // 🔥 FIX FOR CRASH
     implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
 
+    //thingspeak
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+
 }

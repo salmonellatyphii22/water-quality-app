@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#000000"
+    android:padding="24dp">
+
+    <!-- CARD -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp"
+        android:background="#0D0D0D">
+
+        <!-- USERNAME -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Username"
+            app:boxBackgroundMode="outline"
+            app:boxBackgroundColor="#2A2A2A"
+            app:boxStrokeColor="#00E5FF"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="5dp"
+            app:hintTextColor="#00E5FF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#90CAF9"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- PASSWORD -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:hint="Password"
+            app:boxBackgroundMode="outline"
+            app:boxBackgroundColor="#2A2A2A"
+            app:boxStrokeColor="#00E5FF"
+            app:boxStrokeWidth="2dp"
+            app:boxStrokeWidthFocused="5dp"
+            app:endIconMode="password_toggle"
+            app:hintTextColor="#00E5FF">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#90CAF9"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- BUTTON -->
+        <Button
+            android:id="@+id/btnAction"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="SIGN IN"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="#3D7EFF"
+            android:textColor="#FFFFFF"
+            android:elevation="8dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

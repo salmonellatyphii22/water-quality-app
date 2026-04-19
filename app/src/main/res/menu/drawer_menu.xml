@@ -2,29 +2,64 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/nav_dashboard"
-        android:title="Home"
-        android:icon="@android:drawable/ic_menu_view" />
+    <!-- TOP SECTION -->
+    <group android:checkableBehavior="single">
 
-    <item
-        android:id="@+id/nav_graph"
-        android:title="Water Quality Graph"
-        android:icon="@android:drawable/ic_menu_sort_by_size" />
+        <item
+            android:id="@+id/nav_home"
+            android:title="Home"
+            android:icon="@android:drawable/ic_menu_view" />
 
-    <item
-        android:id="@+id/nav_alert"
-        android:title="Alerts"
-        android:icon="@android:drawable/ic_dialog_alert" />
+        <item
+            android:id="@+id/nav_activity"
+            android:title="Activity"
+            android:icon="@android:drawable/ic_menu_info_details" />
 
-    <item
-        android:id="@+id/nav_history"
-        android:title="History"
-        android:icon="@android:drawable/ic_menu_recent_history" />
+        <item
+            android:id="@+id/nav_dashboard"
+            android:title="Dashboard"
+            android:icon="@android:drawable/ic_menu_sort_by_size" />
 
+        <item
+            android:id="@+id/nav_messages"
+            android:title="Messages"
+            android:icon="@android:drawable/ic_dialog_email" />
+
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings"
+            android:icon="@android:drawable/ic_menu_preferences" />
+
+        <item
+            android:id="@+id/nav_graph"
+            android:title="Graph Analysis"
+            android:icon="@android:drawable/ic_menu_view"/>
+
+    </group>
+
+    <!-- ✅ REAL DIVIDER -->
     <item
-        android:id="@+id/nav_settings"
-        android:title="Settings"
-        android:icon="@android:drawable/ic_menu_preferences" />
+        android:id="@+id/divider"
+        android:title="──────────────────────"
+        android:enabled="false" />
+
+    <!-- BOTTOM SECTION -->
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/nav_themes"
+            android:title="Themes"
+            android:icon="@android:drawable/ic_menu_gallery" />
+
+        <item
+            android:id="@+id/nav_tutorials"
+            android:title="Tutorials"
+            android:icon="@android:drawable/ic_menu_help" />
+
+        <item
+            android:id="@+id/nav_integrations"
+            android:title="Integrations"
+            android:icon="@android:drawable/ic_menu_manage" />
+    </group>
 
 </menu>

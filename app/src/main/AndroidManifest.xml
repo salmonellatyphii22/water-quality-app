@@ -16,29 +16,41 @@
         android:theme="@style/Theme.HydroIQ"
         android:enableOnBackInvokedCallback="true">
 
-        <!-- MAIN -->
+        <!-- ✅ LOGIN = LAUNCHER -->
         <activity
-            android:name=".ui.theme.activities.MainActivity"
-            android:exported="true"
-            android:label="HydroIQ">
+            android:name=".ui.theme.activities.LoginActivity"
+            android:exported="true">
+
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
-        <!-- ALL OTHER ACTIVITIES -->
-        <activity android:name=".ui.theme.activities.HomeActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.ActivityPage" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.DashboardActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.MessagesActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.SettingsActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.ThemesActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.TutorialsActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.IntegrationsActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.GraphActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.AlertActivity" android:exported="false"/>
-        <activity android:name=".ui.theme.activities.HistoryActivity" android:exported="false"/>
+        <!-- ✅ SIGNUP -->
+        <activity
+            android:name=".ui.theme.activities.SignupActivity"
+            android:exported="false" />
+
+        <!-- ❗ MAIN ACTIVITY (NO LONGER LAUNCHER) -->
+        <activity
+            android:name=".ui.theme.activities.MainActivity"
+            android:exported="false"
+            android:label="HydroIQ" />
+
+        <!-- OTHER ACTIVITIES -->
+        <activity android:name=".ui.theme.activities.HomeActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.ActivityPage" android:exported="false" />
+        <activity android:name=".ui.theme.activities.DashboardActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.MessagesActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.SettingsActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.ThemesActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.TutorialsActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.IntegrationsActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.GraphActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.AlertActivity" android:exported="false" />
+        <activity android:name=".ui.theme.activities.HistoryActivity" android:exported="false" />
 
     </application>
 

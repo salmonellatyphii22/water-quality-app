@@ -13,6 +13,9 @@ import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.data.*
 import android.graphics.Color
 import android.Manifest
+import android.content.Intent
+import android.widget.Button
+import com.example.canteen.ui.theme.activities.GraphActivity
 
 class DashboardActivity : AppCompatActivity() {
 
@@ -35,6 +38,15 @@ class DashboardActivity : AppCompatActivity() {
         val tvTurbidity = findViewById<TextView>(R.id.tvTurbidity)
         val tvAlert = findViewById<TextView>(R.id.tvAlert)
 
+        // 🔥 Graph Button
+        val btnGraph = findViewById<Button>(R.id.btnGraph)
+
+        btnGraph.setOnClickListener {
+            val intent = Intent(this, GraphActivity::class.java)
+            startActivity(intent)
+        }
+
+        // (Optional) If you're using chart in dashboard
         chart = findViewById(R.id.lineChart)
 
         // 🔥 Notification permission (Android 13+)

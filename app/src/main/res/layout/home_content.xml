@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#121212">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- IMAGE -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/homescreen"
+            android:layout_marginBottom="12dp"/>
+
+        <!-- TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HydroIQ – Smart Water Quality Monitoring"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:paddingBottom="10dp"/>
+
+        <!-- PARAGRAPH 1 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="HydroIQ is an intelligent IoT-based water quality monitoring system designed to provide real-time insights into water conditions. By integrating advanced sensors such as pH, turbidity, TDS, and temperature, the system continuously tracks water quality parameters and delivers accurate data directly to your mobile application."
+            android:textColor="#E0E0E0"
+            android:textSize="15sp"
+            android:lineSpacingExtra="5dp"
+            android:paddingBottom="10dp"/>
+
+        <!-- PARAGRAPH 2 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Water is one of the most essential resources for life, yet it is increasingly threatened by pollution and misuse. HydroIQ helps bridge the gap between awareness and action by offering a user-friendly platform with live analytics, alerts, and historical tracking."
+            android:textColor="#E0E0E0"
+            android:textSize="15sp"
+            android:lineSpacingExtra="5dp"
+            android:paddingBottom="10dp"/>
+
+        <!-- PARAGRAPH 3 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="The application promotes sustainability by analyzing water usage patterns and detecting anomalies. It helps reduce wastage and supports efficient water management across households, industries, and agriculture."
+            android:textColor="#E0E0E0"
+            android:textSize="15sp"
+            android:lineSpacingExtra="5dp"
+            android:paddingBottom="10dp"/>
+
+        <!-- PARAGRAPH 4 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="With seamless IoT integration and a scalable backend, HydroIQ is built for future advancements in smart water management while spreading awareness about preserving water resources."
+            android:textColor="#E0E0E0"
+            android:textSize="15sp"
+            android:lineSpacingExtra="5dp"
+            android:paddingBottom="16dp"/>
+
+        <!-- LEARN SECTION -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Learn More About Water Issues"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@android:color/white"
+            android:paddingBottom="10dp"/>
+
+        <!-- WHO LINK CARD -->
+        <TextView
+            android:id="@+id/linkWHO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🌍 World Health Organization\nTap to learn about drinking water safety"
+            android:textColor="#4FC3F7"
+            android:textSize="15sp"
+            android:padding="14dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="8dp"
+            android:lineSpacingExtra="4dp"/>
+
+        <!-- UNESCO -->
+        <TextView
+            android:id="@+id/linkUNESCO"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="💧 UNESCO\nExplore global water security initiatives"
+            android:textColor="#4FC3F7"
+            android:textSize="15sp"
+            android:padding="14dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="8dp"
+            android:lineSpacingExtra="4dp"/>
+
+        <!-- UNEP -->
+        <TextView
+            android:id="@+id/linkUNEP"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🌱 UNEP\nUnderstand water pollution challenges"
+            android:textColor="#4FC3F7"
+            android:textSize="15sp"
+            android:padding="14dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="8dp"
+            android:lineSpacingExtra="4dp"/>
+
+        <!-- WaterAid -->
+        <TextView
+            android:id="@+id/linkWaterAid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="🚰 WaterAid\nLearn about clean water and sanitation"
+            android:textColor="#4FC3F7"
+            android:textSize="15sp"
+            android:padding="14dp"
+            android:background="#1E1E1E"
+            android:layout_marginBottom="16dp"
+            android:lineSpacingExtra="4dp"/>
+
+    </LinearLayout>
+
+</ScrollView>

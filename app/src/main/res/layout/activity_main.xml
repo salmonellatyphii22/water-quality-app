@@ -11,9 +11,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#121212">
 
-        <!-- TOP BAR -->
+        <!-- ✅ TOP BAR (ONLY HEADER) -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -35,11 +36,81 @@
                 android:textSize="18sp"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Dashboard"
-            android:layout_margin="16dp"/>
+        <!-- ✅ HOME CONTENT (SCROLLABLE) -->
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- IMAGE -->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="180dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/homescreen"
+                    android:layout_marginBottom="12dp"/>
+
+                <!-- WELCOME -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Welcome to HydroIQ"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"/>
+
+                <!-- SUBTITLE -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Real-time water monitoring system"
+                    android:textColor="#B0B0B0"
+                    android:paddingBottom="12dp"/>
+
+                <!-- CONTENT -->
+                <TextView
+                    android:id="@+id/contentText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#E0E0E0"
+                    android:textSize="15sp"
+                    android:lineSpacingExtra="5dp"
+                    android:text="HydroIQ helps you monitor water quality using IoT sensors like pH, TDS, turbidity, and temperature. It provides real-time insights, alerts, and historical data to ensure safe and efficient water usage."/>
+
+                <!-- LEARN -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Learn and Awareness"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/white"
+                    android:paddingTop="16dp"/>
+
+                <!-- LINKS -->
+                <TextView
+                    android:id="@+id/linkWHO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• Water Safety and Pollution (WHO)"
+                    android:textColor="#4FC3F7"
+                    android:padding="10dp"/>
+
+                <TextView
+                    android:id="@+id/linkUNESCO"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="• Water Conservation (UNESCO)"
+                    android:textColor="#4FC3F7"
+                    android:padding="10dp"/>
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </LinearLayout>
 
