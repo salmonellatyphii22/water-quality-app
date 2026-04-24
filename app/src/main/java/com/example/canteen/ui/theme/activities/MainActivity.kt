@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity() {
 //                R.id.nav_messages ->
 //                    startActivity(Intent(this, MessagesActivity::class.java))
 //
-//                R.id.nav_settings ->
-//                    startActivity(Intent(this, SettingsActivity::class.java))
+                R.id.nav_settings ->
+                    startActivity(Intent(this, SettingsActivity::class.java))
 //
 //                R.id.nav_themes ->
 //                    startActivity(Intent(this, ThemesActivity::class.java))

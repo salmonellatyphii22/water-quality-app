@@ -2,38 +2,33 @@
 
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!-- TOP SECTION -->
+    <!-- MAIN NAVIGATION -->
     <group android:checkableBehavior="single">
 
         <item
             android:id="@+id/nav_home"
             android:title="Home"
-            android:icon="@android:drawable/ic_menu_view" />
+            android:icon="@android:drawable/ic_menu_myplaces" />
 
         <item
             android:id="@+id/nav_dashboard"
             android:title="Dashboard"
-            android:icon="@android:drawable/ic_menu_sort_by_size" />
-
-<!--        <item-->
-<!--            android:id="@+id/nav_messages"-->
-<!--            android:title="Messages"-->
-<!--            android:icon="@android:drawable/ic_dialog_email" />-->
+            android:icon="@android:drawable/ic_menu_compass" />
 
         <item
             android:id="@+id/nav_graph"
             android:title="Graph Analysis"
-            android:icon="@android:drawable/ic_menu_view"/>
+            android:icon="@android:drawable/ic_menu_sort_by_size" />
 
         <item
             android:id="@+id/nav_history"
             android:title="History"
-            android:icon="@android:drawable/ic_menu_info_details" />
+            android:icon="@android:drawable/ic_menu_recent_history" />
 
         <item
             android:id="@+id/nav_settings"
             android:title="Settings"
-            android:icon="@android:drawable/ic_menu_preferences" />
+            android:icon="@android:drawable/ic_menu_manage" />
 
     </group>
 

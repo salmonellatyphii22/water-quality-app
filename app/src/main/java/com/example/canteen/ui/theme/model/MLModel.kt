@@ -1,6 +1,7 @@
 package com.example.canteen.ui.theme.model
 
 import android.content.Context
+import android.util.Log
 import org.tensorflow.lite.Interpreter
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
@@ -20,16 +21,28 @@ class MLModel(context: Context) {
         interpreter = Interpreter(buffer)
     }
 
-    // ✅ UPDATED INPUT FORMAT
     fun predict(ph: Float, temp: Float, conductivity: Float): Float {
 
-        // Input must match EXACT training order
-        val input = arrayOf(floatArrayOf(ph, temp, conductivity))
+        try {
+            // 🔥 NORMALIZE INPUT (VERY IMPORTANT)
+            val normPH = ph / 14f
+            val normTemp = temp / 100f
+            val normCond = conductivity / 1000f
 
-        val output = Array(1) { FloatArray(1) }
+            // 🔥 USE FLOAT ARRAY (most compatible)
+            val input = arrayOf(floatArrayOf(normPH, normTemp, normCond))
 
-        interpreter.run(input, output)
+            val output = Array(1) { FloatArray(1) }
 
-        return output[0][0]
+            interpreter.run(input, output)
+
+            Log.d("ML_DEBUG", "Output = ${output[0][0]}")
+
+            return output[0][0]
+
+        } catch (e: Exception) {
+            Log.e("ML_DEBUG", "ML Crash", e)
+            return 0f // prevent crash
+        }
     }
 }

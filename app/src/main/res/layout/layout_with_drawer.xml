@@ -11,29 +11,32 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/background">
 
         <!-- TOP BAR -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:background="#0D47A1"
-            android:gravity="center_vertical">
+            android:background="@color/primary"
+            android:gravity="center_vertical"
+            android:elevation="4dp">
 
             <ImageView
                 android:id="@+id/menuIcon"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_margin="16dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_marginStart="16dp"
                 android:src="@android:drawable/ic_menu_sort_by_size"
-                android:tint="@android:color/white"/>
+                app:tint="@color/text_white"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HydroIQ"
-                android:textColor="@android:color/white"
+                android:textColor="@color/text_white"
                 android:textSize="20sp"
+                android:textStyle="bold"
                 android:layout_marginStart="16dp"/>
         </LinearLayout>
 
@@ -45,17 +48,18 @@
 
     </LinearLayout>
 
-    <!-- ✅ CLEAN DRAWER -->
+    <!-- 🌿 DRAWER -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/navigationView"
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="#2F3146"
+        android:background="@color/background"
+        android:paddingTop="12dp"
 
         app:menu="@menu/drawer_menu"
-        app:itemTextColor="@android:color/white"
-        app:itemIconTint="@android:color/white"
-        app:itemBackground="?attr/selectableItemBackground"/>
+        app:itemTextColor="@color/nav_item_color"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemBackground="@drawable/nav_item_bg"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

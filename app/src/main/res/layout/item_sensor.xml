@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="12dp"
     android:layout_marginBottom="8dp"
-    android:background="#1E1E1E">
+    android:background="@color/card_bg">
 
     <!-- FIRST ROW -->
     <LinearLayout
@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="pH: "
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <TextView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="TDS: "
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
     </LinearLayout>
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Turbidity: "
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
 
         <TextView
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Temp: "
-            android:textColor="@android:color/white"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"/>
     </LinearLayout>
 
@@ -67,7 +67,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Time: "
-        android:textColor="@android:color/darker_gray"
+        android:textColor="@color/text_secondary"
         android:textSize="14sp"
         android:layout_marginTop="6dp"/>
 

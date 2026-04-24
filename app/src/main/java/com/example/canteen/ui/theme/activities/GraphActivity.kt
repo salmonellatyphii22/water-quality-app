@@ -25,6 +25,12 @@ class GraphActivity : AppCompatActivity() {
 
         chart = findViewById(R.id.lineChart)
 
+        // 🔥 Remove "No chart data available"
+        chart.setNoDataText("")
+
+        // Optional: make background clean
+        chart.setNoDataTextColor(android.graphics.Color.TRANSPARENT)
+
         fetchData()
     }
 

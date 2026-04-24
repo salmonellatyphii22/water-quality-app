@@ -12,31 +12,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#121212">
+        android:background="@color/background">
 
-        <!-- ✅ TOP BAR (ONLY HEADER) -->
+        <!-- TOP BAR -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:background="#0D47A1"
-            android:gravity="center_vertical">
+            android:background="@color/primary"
+            android:gravity="center_vertical"
+            android:elevation="4dp">
 
             <ImageView
                 android:id="@+id/menuIcon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:layout_margin="16dp"
-                android:src="@android:drawable/ic_menu_sort_by_size" />
+                android:layout_marginStart="16dp"
+                android:src="@android:drawable/ic_menu_sort_by_size"
+                app:tint="@color/text_white"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="HydroIQ"
-                android:textColor="@android:color/white"
-                android:textSize="18sp"/>
+                android:textColor="@color/text_white"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="16dp"/>
         </LinearLayout>
 
-        <!-- ✅ HOME CONTENT (SCROLLABLE) -->
+        <!-- CONTENT -->
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -53,23 +57,24 @@
                     android:layout_height="180dp"
                     android:scaleType="centerCrop"
                     android:src="@drawable/homescreen"
-                    android:layout_marginBottom="12dp"/>
+                    android:layout_marginBottom="16dp"
+                    android:background="@color/card_bg"/>
 
                 <!-- WELCOME -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Welcome to HydroIQ"
-                    android:textSize="20sp"
+                    android:text="Welcome to HydroIQ "
+                    android:textSize="22sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@color/primary"/>
 
                 <!-- SUBTITLE -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Real-time water monitoring system"
-                    android:textColor="#B0B0B0"
+                    android:textColor="@color/text_secondary"
                     android:paddingBottom="12dp"/>
 
                 <!-- CONTENT -->
@@ -77,36 +82,56 @@
                     android:id="@+id/contentText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#E0E0E0"
+                    android:textColor="@color/text_primary"
                     android:textSize="15sp"
                     android:lineSpacingExtra="5dp"
                     android:text="HydroIQ helps you monitor water quality using IoT sensors like pH, TDS, turbidity, and temperature. It provides real-time insights, alerts, and historical data to ensure safe and efficient water usage."/>
 
-                <!-- LEARN -->
+                <!-- SECTION -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Learn and Awareness"
+                    android:text="Learn and Awareness 🌍"
                     android:textStyle="bold"
-                    android:textColor="@android:color/white"
-                    android:paddingTop="16dp"/>
+                    android:textSize="18sp"
+                    android:textColor="@color/primary"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="10dp"/>
 
-                <!-- LINKS -->
-                <TextView
-                    android:id="@+id/linkWHO"
+                <!-- LINK CARDS -->
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Water Safety and Pollution (WHO)"
-                    android:textColor="#4FC3F7"
-                    android:padding="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="@color/card_bg">
 
-                <TextView
-                    android:id="@+id/linkUNESCO"
+                    <TextView
+                        android:id="@+id/linkWHO"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="🌍 WHO - Water Safety and Pollution"
+                        android:textColor="@color/primary"
+                        android:padding="16dp"/>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="• Water Conservation (UNESCO)"
-                    android:textColor="#4FC3F7"
-                    android:padding="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="16dp"
+                    app:cardElevation="6dp"
+                    android:backgroundTint="@color/card_bg">
+
+                    <TextView
+                        android:id="@+id/linkUNESCO"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="💧 UNESCO - Water Conservation"
+                        android:textColor="@color/primary"
+                        android:padding="16dp"/>
+                </com.google.android.material.card.MaterialCardView>
 
             </LinearLayout>
 
@@ -120,6 +145,10 @@
         android:layout_width="280dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:menu="@menu/drawer_menu"/>
+        android:background="@color/background"
+        app:menu="@menu/drawer_menu"
+        app:itemTextColor="@color/nav_item_color"
+        app:itemIconTint="@color/nav_item_color"
+        app:itemBackground="@drawable/nav_item_bg"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>
