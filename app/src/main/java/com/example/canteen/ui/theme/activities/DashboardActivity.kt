@@ -4,17 +4,19 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.canteen.databinding.ActivityDashboardBinding
 import com.example.canteen.ui.theme.api.RetrofitClient
-import com.example.canteen.ui.theme.model.Feed
+import com.example.canteen.ui.theme.viewmodels.WaterViewModel
 import kotlinx.coroutines.launch
 
 class DashboardActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDashboardBinding
+    private lateinit var viewModel: WaterViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,13 +24,16 @@ class DashboardActivity : AppCompatActivity() {
         binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // ✅ FIX 1: Graph button navigation
+        // ✅ Initialize ML ViewModel
+        viewModel = WaterViewModel(application)
+
+        // ✅ Graph button
         binding.btnGraph.setOnClickListener {
             startActivity(Intent(this, GraphActivity::class.java))
         }
 
         fetchLiveData()
-        startAutoRefresh()
+//        startAutoRefresh()
     }
 
     private fun fetchLiveData() {
@@ -45,60 +50,71 @@ class DashboardActivity : AppCompatActivity() {
                 if (feeds.isNotEmpty()) {
                     val latest = feeds.last()
 
-                    // ✅ Sensor values
-                    val ph = latest.field1 ?: "--"
-                    val tds = latest.field2 ?: "--"
-                    val temp = latest.field3 ?: "--"
-                    val turbidity = latest.field4 ?: "--"
+                    // ✅ Raw sensor values
+                    val phStr = latest.field1 ?: "--"
+                    val tdsStr = latest.field2 ?: "--"
+                    val tempStr = latest.field3 ?: "--"
+                    val turbidityStr = latest.field4 ?: "--"
 
-                    binding.tvPH.text = "pH: $ph"
-                    binding.tvTDS.text = "TDS: $tds"
-                    binding.tvTemp.text = "Temp: $temp"
-                    binding.tvTurbidity.text = "Turbidity: $turbidity"
+                    // ✅ Show raw data
+                    binding.tvPH.text = "pH: $phStr"
+                    binding.tvTDS.text = "TDS: $tdsStr"
+                    binding.tvTemp.text = "Temp: $tempStr"
+                    binding.tvTurbidity.text = "Turbidity: $turbidityStr"
 
-                    // ✅ FIX 2: Timestamp (formatted)
-                    val rawTime = latest.created_at
-                    val formattedTime = if (rawTime != null) {
-                        rawTime.replace("T", " ").replace("Z", "")
-                    } else {
-                        "--"
-                    }
+                    // ✅ Time
+                    val formattedTime = latest.created_at
+                        ?.replace("T", " ")
+                        ?.replace("Z", "") ?: "--"
                     binding.tvTime.text = "Time: $formattedTime"
 
-                    // ✅ Water Quality Check
-                    val message = checkWaterQuality(latest)
-                    binding.tvAlert.text = message
+                    // ✅ Convert to Float (ML input)
+                    val ph = phStr.toFloatOrNull() ?: 0f
+                    val temp = tempStr.toFloatOrNull() ?: 0f
+                    val conductivity = tdsStr.toFloatOrNull() ?: 0f
 
-                    if (!message.contains("Safe")) {
-                        Toast.makeText(this@DashboardActivity, message, Toast.LENGTH_LONG).show()
+                    // 🔥 ML OUTPUT
+                    val raw = viewModel.predictRaw(ph, temp, conductivity)
+
+                    // 🔍 Debug
+                    Log.d("ML_DEBUG", "RAW OUTPUT = $raw")
+
+                    // ✅ FINAL UI RESULT
+                    val resultText = if (raw > 0.5f) {
+                        "Water Quality: GOOD ✅\nConfidence: ${(raw * 100).toInt()}%"
+                    } else {
+                        "Water Quality: BAD ❌\nConfidence: ${((1 - raw) * 100).toInt()}%"
+                    }
+
+                    // 🔥 SET RESULT
+                    binding.tvAlert.text = resultText
+
+                    // 🎨 Color based on result
+                    val color = if (raw > 0.5f)
+                        getColor(android.R.color.holo_green_light)
+                    else
+                        getColor(android.R.color.holo_red_light)
+
+                    binding.tvAlert.setTextColor(color)
+
+                    // ⚠️ Alert for unsafe water
+                    if (raw <= 0.5f) {
+                        Toast.makeText(
+                            this@DashboardActivity,
+                            "⚠️ Unsafe Water Detected!",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
 
             } catch (e: Exception) {
                 e.printStackTrace()
-                Toast.makeText(this@DashboardActivity, "Error fetching data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@DashboardActivity,
+                    "Error fetching data",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-        }
-    }
-
-    private fun checkWaterQuality(feed: Feed): String {
-
-        val ph = feed.field1?.toFloatOrNull() ?: 0f
-        val tds = feed.field2?.toFloatOrNull() ?: 0f
-        val temp = feed.field3?.toFloatOrNull() ?: 0f
-        val turbidity = feed.field4?.toFloatOrNull() ?: 0f
-
-        return when {
-            ph < 6 -> "⚠️ Low pH! Water is acidic"
-            ph > 8.5 -> "⚠️ High pH! Water is alkaline"
-
-            tds > 500 -> "⚠️ High TDS! Not safe"
-
-            turbidity > 5 -> "⚠️ High Turbidity!"
-
-            temp > 35 -> "⚠️ Temperature too high!"
-
-            else -> "✅ Water is Safe"
         }
     }
 
@@ -108,7 +124,7 @@ class DashboardActivity : AppCompatActivity() {
         val runnable = object : Runnable {
             override fun run() {
                 fetchLiveData()
-                handler.postDelayed(this, 15000)
+                handler.postDelayed(this, 15000) // refresh every 15 sec
             }
         }
 

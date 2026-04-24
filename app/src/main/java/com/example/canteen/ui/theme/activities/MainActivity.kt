@@ -49,20 +49,20 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_dashboard ->
                     startActivity(Intent(this, DashboardActivity::class.java))
 
-                R.id.nav_messages ->
-                    startActivity(Intent(this, MessagesActivity::class.java))
-
-                R.id.nav_settings ->
-                    startActivity(Intent(this, SettingsActivity::class.java))
-
-                R.id.nav_themes ->
-                    startActivity(Intent(this, ThemesActivity::class.java))
-
-                R.id.nav_tutorials ->
-                    startActivity(Intent(this, TutorialsActivity::class.java))
-
-                R.id.nav_integrations ->
-                    startActivity(Intent(this, IntegrationsActivity::class.java))
+//                R.id.nav_messages ->
+//                    startActivity(Intent(this, MessagesActivity::class.java))
+//
+//                R.id.nav_settings ->
+//                    startActivity(Intent(this, SettingsActivity::class.java))
+//
+//                R.id.nav_themes ->
+//                    startActivity(Intent(this, ThemesActivity::class.java))
+//
+//                R.id.nav_tutorials ->
+//                    startActivity(Intent(this, TutorialsActivity::class.java))
+//
+//                R.id.nav_integrations ->
+//                    startActivity(Intent(this, IntegrationsActivity::class.java))
 
                 R.id.nav_graph ->
                     startActivity(Intent(this, GraphActivity::class.java))
